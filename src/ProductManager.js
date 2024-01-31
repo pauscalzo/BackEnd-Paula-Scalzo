@@ -3,12 +3,12 @@ import fs from "fs"
 export class ProductManager {
     constructor () {
     this.products = [];
-    this.path = "./src/data/products.json";
+    this.path = "./data/products.json"
     };
 
     getProducts(){
         try {
-            const data = fs.readFileSync(this.path, "utf8");
+            const data = fs.readFileSync("./data/products.json", "utf8");
             this.products = JSON.parse(data);
             return this.products;              
         }
@@ -36,10 +36,11 @@ export class ProductManager {
             throw new Error("Debe completar todos los campos.");
         }
     
-        if (this.products.some((prod) => prod.code === code)) {
+        else if (this.products.some((product) => product.code === code)) {
             throw new Error("El producto ya existe");
         }
     
+        else {
         const newProduct = {
             id: this.products.length + 1,
             title: title,
@@ -63,7 +64,7 @@ export class ProductManager {
             console.error("no se guardo el producto", error);
             throw error;
         }
-    }
+    }};
 
     updateProduct(id, productUpdate) {
         this.getProducts();
@@ -78,7 +79,7 @@ export class ProductManager {
                 console.error("no se pudo actualizar el archivo", error)
             }
         } else {
-            console.log("No se encontro el producto");
+            console.error("No se encontro el producto");
         }   
     };
 
@@ -95,7 +96,7 @@ export class ProductManager {
                 console.error("no se pudo borrar el producto", error)
             }
         } else {
-            console.log("No se encontro el producto");
+            console.error("No se encontro el producto");
         }  
     };
 };
